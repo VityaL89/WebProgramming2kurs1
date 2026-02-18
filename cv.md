@@ -11,3 +11,10 @@ My goal is to get a university degree. I am responsible and attentive to details
 ## Skills
 - **Version Control:** Git, GitHub
 - **Tools:** VS Code
+
+## Code Example
+
+int a = 10;
+int b = 20;
+int c = a + b;
+Console.WriteLine(c);
