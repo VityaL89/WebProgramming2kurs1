@@ -33,3 +33,7 @@ Console.WriteLine(c);
 ## Languages
 - **Russian:** Native
 - **English:** Intermediate (A1-A2)
+
+## Photo
+
+![My photo](https://i.postimg.cc/43KMGXjy/photo.jpg)
