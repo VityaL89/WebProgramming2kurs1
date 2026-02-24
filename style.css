@@ -39,31 +39,34 @@ body {
 }
 
 header {
-    padding: 35px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; 
+    justify-content: 
+    space-between; 
+    align-items: center; 
+    padding: 0 40px;
 }
 
 header nav{
     width: 50%;
-
-}
-
-header nav ul{
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
+    display: flex; 
+    justify-content: center;
     align-items: center;
-
 }
+
+header nav ul {
+    display: flex;
+    gap: 40px; 
+    justify-content: center;
+    align-items: center;
+}
+
 
 header nav ul li{
     display: inline-block;
 }
 
 header nav ul li a{
-     color: #081F32;
+    color: #081F32;
     font-size: 20px;
     font-weight: 500;
     text-decoration: none;
@@ -81,13 +84,18 @@ header nav ul li.active a{
     font-weight:700;
 }
 
-header nav ul li.btn a{
+header a.btn,
+button.btn {
     background: #1B75BB;
-    padding: 15px 30px 15px 30px;
+    padding: 12px 26px;
     border-radius: 5px;
     color: white;
-    font-size: 27px;
+    font-size: 23px;        
+    font-weight: 500;
+    text-decoration: none;  
+    display: inline-block;  
 }
+
 
 .main-banner {
     background-image: url('img/mebel.svg');
@@ -100,26 +108,35 @@ header nav ul li.btn a{
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;  
-    width: auto;  
-    height: 144px;
+    position: relative;
+    width: 144px;   /* было 200 — увеличиваем */
+    height: 144px;  /* было 120 — увеличиваем */
 }
 
 .logo-icon {
-    width: 144px;  
-    height: 144px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     display: block;
 }
 
 .logo-text {
+    position: absolute;
+    bottom: 60px;     /* чуть ниже, т.к. логотип стал больше */
+    right: -35px;       /* это положение под правый край крыши */
+
     font-family: 'Gelasio', serif;
     font-weight: 500;
-    font-size: 24px;
-    line-height: 144px;
-    color: #081F32;  
+    font-size: 23px;   /* увеличиваем текст */
+    color: #081F32;
     white-space: nowrap;
-    width: 122px;
+}
+
+
+
+
+.p2{
+    color: #1B75BB;
+    text-transform: uppercase;
+
 }
