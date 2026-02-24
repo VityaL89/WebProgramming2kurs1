@@ -1,0 +1,125 @@
+@font-face{
+    font-family: "Gelasio";
+    src: url('./fonts/Gelasio-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: "Gelasio";
+    src: url('./fonts/Gelasio-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: "Roboto";
+    src: url('./fonts/Roboto-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+}
+
+.container{
+    width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    padding: 35px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav{
+    width: 50%;
+
+}
+
+header nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+header nav ul li{
+    display: inline-block;
+}
+
+header nav ul li a{
+     color: #081F32;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+header nav ul li:not(.active):not(.btn) a:hover{
+    border-bottom: 5px solid #1B75BB;
+    padding: 9px 17px;
+    border-radius: 5px;
+}
+
+header nav ul li.active a{
+    color: #1B75BB;
+    font-weight:700;
+}
+
+header nav ul li.btn a{
+    background: #1B75BB;
+    padding: 15px 30px 15px 30px;
+    border-radius: 5px;
+    color: white;
+    font-size: 27px;
+}
+
+.main-banner {
+    background-image: url('img/mebel.svg');
+    background-size: cover;        
+    background-position: center;    
+    background-repeat: no-repeat;   
+    width: 100%;
+    min-height: 950px;            
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;  
+    width: auto;  
+    height: 144px;
+}
+
+.logo-icon {
+    width: 144px;  
+    height: 144px;
+    object-fit: contain;
+    display: block;
+}
+
+.logo-text {
+    font-family: 'Gelasio', serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 144px;
+    color: #081F32;  
+    white-space: nowrap;
+    width: 122px;
+}
