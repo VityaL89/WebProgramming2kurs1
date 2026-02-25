@@ -92,7 +92,8 @@ header a.btn{
     font-size: 23px;        
     font-weight: 500;
     text-decoration: none;  
-    display: inline-block;  
+    display: inline-block; 
+    cursor: pointer; 
 }
 
 
@@ -173,6 +174,7 @@ header a.btn{
     text-decoration: none;  
     display: inline-block;
     margin-top: 24px;
+    cursor: pointer;
 }
 
 .blue {
@@ -182,9 +184,9 @@ header a.btn{
 .reservation { 
     position: relative; 
     bottom: -275px;
-    left: 405px;
+    left: 340px;
     background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(235, 234, 230, 1) 100%);
-    padding: 20px 30px; 
+    padding: 30px 55px; 
     border-radius: 10px; 
     display: flex; 
     align-items: center; 
@@ -226,5 +228,30 @@ header a.btn{
     cursor: pointer;
 }
 
+.rectangle1 {
+    position: absolute;
+    top: 0;
+    left: -35px;
+    width: 740px;
+    height: 370px;
+    border-radius: 10px;
+    overflow: hidden;
+}
 
+.rectangle1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:2
+}
+
+.videos {
+    position: relative;
+    width: 1400px; 
+    height: 450px; 
+    margin: 270px auto 0; /
+}
 
