@@ -178,3 +178,53 @@ header a.btn{
 .blue {
     color: #1B75BB;
 }
+
+.reservation { 
+    position: relative; 
+    bottom: -275px;
+    left: 405px;
+    background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(235, 234, 230, 1) 100%);
+    padding: 20px 30px; 
+    border-radius: 10px; 
+    display: flex; 
+    align-items: center; 
+    gap: 30px; 
+    width: fit-content; 
+}
+
+.reservation-item {
+    width: 140px;
+    border-right: 3px solid #D9D9D9;
+    padding-right: 20px;
+}
+
+.reservation-item:last-child {
+    border-right: none;
+}
+
+.label {
+    display: block;
+    font-size: 15px;
+    color: #6E7A8A;
+    margin-bottom: 5px;
+}
+
+.value {
+    font-size: 18px;
+    color: #081F32;
+    font-weight: 500;
+}
+
+.find-room {
+    background: #1B75BB;
+    color: #fff;
+    padding: 18px 32px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+
+
