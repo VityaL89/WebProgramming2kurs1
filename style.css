@@ -350,3 +350,56 @@ header a.btn{
     border-bottom: 15px solid transparent;
 }
 
+.features { 
+    margin-top: 200px; 
+    text-align: center; 
+} 
+
+.features-header h2 { 
+    font-family: "Gelasio"; 
+    font-size: 32px; 
+    font-weight: 600; 
+    color: #081F32;  
+    margin-top:140px;
+    text-align: center;
+} 
+.features-header p { 
+    font-size: 18px; 
+    color: #6E7A8A; 
+    max-width: 800px; 
+    margin: 0 auto 60px; 
+    line-height: 1.6; 
+    margin-top:40px;
+    text-align: center;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
+
+.feature-card h3 {
+    font-family: "Gelasio";
+    font-size: 22px;
+    margin: 30px 0 10px;
+    color:#081F32;
+}
+
+.feature-card p {
+    font-size: 19px;
+    color: #6E7A8A;
+    line-height: 1.5;
+    margin-top:20px;
+}
+
+.feature-card {
+    border-left: 2px solid #E0E0E0;
+    border-right: 2px solid #E0E0E0;
+    border-bottom: 2px solid #E0E0E0;
+    border-top: 2px solid #E0E0E0;
+    border-radius: 5px;
+    margin-bottom: 150px;
+    padding: 35px 10px;
+}
+
