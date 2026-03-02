@@ -327,3 +327,26 @@ header a.btn{
     object-fit: cover;
 }
 
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;      
+    height: 100px;
+    background: white; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 25px solid #1B75BB;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+
