@@ -520,6 +520,40 @@ header a.btn{
     width: fit-content;
 }
 
+.testimonials {
+    margin-top: 130px;
+    margin-bottom: 120px;
+}
+
+.testimonials-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+.testimonials-header h2 {
+    font-family: "Gelasio";
+    font-size: 32px;
+    color: #081F32;
+    margin: 0;
+}
+
+.btn-view-all {
+    background: #1B75BB;
+    color: rgb(255, 255, 255);
+    padding: 22px 43px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
 
 
 
