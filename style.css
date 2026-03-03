@@ -403,6 +403,31 @@ header a.btn{
     padding: 35px 10px;
 }
 
+.gallery {
+    margin-bottom: 120px;
+}
+
+.gallery-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    
+}
+
+.gallery-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;     
+    margin-bottom: 20px;
+}
+
+.gallery-top .room-card {
+    width: 635px;
+    flex: 0 0 635px; 
+}
+
 
 .gallery-header h2{
     font-family: "Gelasio";
@@ -434,6 +459,66 @@ header a.btn{
     cursor: pointer; 
 }
 
+.room-card {
+    position: relative;
+    width: 100%; 
+    height: 377px; 
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.room-card_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+
+.room-card_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-card_overlay {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background: rgba(185, 185, 185, 0.884); 
+    padding: 20px 27px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 271px;
+    max-width: none;
+}
+
+
+.room-card_overlay h3 {
+    font-family: "Gelasio";
+    font-size: 19px;
+    margin: 0;
+    color: #081F32;
+}
+
+.room-card_overlay p {
+    font-size: 15px;
+    margin: 0;
+    color: #082135;
+}
+
+.room-card_overlay button {
+    background: #1B75BB;
+    color: #fff;
+    padding: 15px 31px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+}
 
 
 
