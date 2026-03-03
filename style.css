@@ -403,3 +403,42 @@ header a.btn{
     padding: 35px 10px;
 }
 
+
+.gallery-header h2{
+    font-family: "Gelasio";
+    font-size: 32px;
+    line-height: 1.4;
+    color: #081F32;
+    margin-top: 0px;
+}
+
+.gallery-header p{
+    font-size:18px;
+    line-height: 1.6;
+    color: #6E7A8A;
+    margin-top: 20px;
+    width: 439px;
+    height: auto;
+}
+
+.gallery-header .btn2 { 
+    background: #1B75BB; 
+    padding: 17px 20px; 
+    border-radius: 5px; 
+    color: white; 
+    font-size: 23px; 
+    font-weight: 500; 
+    text-decoration: none; 
+    display: inline-block; 
+    margin-top: 30px; 
+    cursor: pointer; 
+}
+
+
+
+
+
+
+
+
+
