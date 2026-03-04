@@ -552,6 +552,115 @@ header a.btn{
     cursor: pointer;
 }
 
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 70px;
+}
+
+.testimonial-card {
+    border: 2px solid #E8E8E8;
+    border-radius: 10px;
+    padding: 50px 40px;
+    background: white;
+    text-align: center;
+}
+
+.testimonial-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    overflow: hidden;
+}
+
+.testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.testimonial-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 0 30px;
+}
+
+.quote-box {
+    flex-shrink: 0;
+    width: 24px;
+    height: 20px;
+    background-image: url('img/Group.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-self: flex-start;
+    margin-top: -25px;
+    margin-left: -35px;
+}
+
+.quote-box-active {
+    flex-shrink: 0;
+    width: 24px;
+    height: 20px;
+    background-image: url('img/active.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-self: flex-start;
+    margin-top: -25px;
+    margin-left: -35px;
+}
+
+.testimonial-content p {
+    font-size: 18px;
+    color: #6E7A8A;
+    line-height: 1.6;
+    margin: 0 auto;
+    flex: 1;
+    max-width: 320px;
+    text-align: center;
+}
+
+.testimonial-author h3 {
+    font-family: "Gelasio";
+    font-size: 20px;
+    color: #4b4c4d;
+    margin: 0 0 5px 0;
+    font-weight: 500;
+}
+
+.testimonial-author span {
+    font-size: 14px;
+    color: #6E7A8A;
+}
+
+.testimonial-content p.active {
+    font-size: 18px;
+    color: #081F32;  
+    line-height: 1.6;
+    margin: 0 auto;
+    flex: 1;
+    max-width: 320px;
+    text-align: center;
+    font-weight: 500;  
+}
+
+.testimonial-author-active h3 {
+    font-family: "Gelasio";
+    font-size: 20px;
+    color: #081F32;  
+    margin: 0 0 5px 0;
+    font-weight: 600;  
+}
+
+.testimonial-author-active span {
+    font-size: 14px;
+    color: #6E7A8A;
+}
+
 
 
 
