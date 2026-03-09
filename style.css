@@ -204,7 +204,7 @@ header a.btn{
 .reservation { 
     position: relative; 
     bottom: -205px;
-    left: 340px;
+    left: 100px;
     background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(235, 234, 230, 1) 100%);
     padding: 0px 30px; 
     border-radius: 10px; 
@@ -374,24 +374,32 @@ header a.btn{
 .features { 
     margin-top: 200px; 
     text-align: center; 
-} 
+}
+
+.features .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
 
 .features-header h2 { 
     font-family: "Gelasio"; 
     font-size: 32px; 
-    font-weight: 600; 
+    font-weight: 500; 
     color: #081F32;  
     margin-top:140px;
     text-align: center;
+    line-height: 1.4;
 } 
 .features-header p { 
     font-size: 18px; 
     color: #6E7A8A; 
-    max-width: 800px; 
+    font-weight: 400px;
     margin: 0 auto 60px; 
     line-height: 1.6; 
-    margin-top:40px;
+    margin-top:25px;
     text-align: center;
+    letter-spacing: 0;
 }
 
 .features-grid {
@@ -402,7 +410,10 @@ header a.btn{
 
 .feature-card h3 {
     font-family: "Gelasio";
-    font-size: 22px;
+    font-weight: 500px;
+    font-size: 24px;
+    line-height: 1.5;
+    letter-spacing: 0;
     margin: 30px 0 10px;
     color:#081F32;
 }
@@ -415,13 +426,12 @@ header a.btn{
 }
 
 .feature-card {
-    border-left: 2px solid #E0E0E0;
-    border-right: 2px solid #E0E0E0;
-    border-bottom: 2px solid #E0E0E0;
-    border-top: 2px solid #E0E0E0;
+    border: 2px solid #E0E0E0;
     border-radius: 5px;
+    padding: 75px 10px 18px;
+    text-align: center;
+    background: #fff;
     margin-bottom: 150px;
-    padding: 35px 10px;
 }
 
 .gallery {
