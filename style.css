@@ -51,15 +51,13 @@ body {
 
 .container{
     width: 1600px;
-    margin: 0 auto;
     padding: 0 40px;
 }
 
 header {
     display: flex; 
-    justify-content: 
-    space-between; 
     align-items: center; 
+    gap: 200px;
 }
 
 header nav{
@@ -74,6 +72,8 @@ header nav ul {
     gap: 40px; 
     justify-content: center;
     align-items: center;
+    margin-right: 107px;
+    margin-bottom: 15px;
 }
 
 
@@ -114,23 +114,29 @@ header a.btn {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: -109px;
 }
+
 
 
 .main-banner {
+
+    height: 690px;
     background-image: url('img/mebel.svg');
-    background-size: cover;        
-    background-position: center;    
-    background-repeat: no-repeat;   
-    width: 100%;
-    min-height: 950px;            
-    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 1600px;
+
 }
+
 
 .logo {
     position: relative;
     width: 144px;   
-    height: 144px;  
+    height: 144px;
+
 }
 
 .logo-icon {
@@ -138,15 +144,17 @@ header a.btn {
     height: 100%;
     object-fit: contain;
     display: block;
+    margin-left: 169px;
+    margin-top: -3px;
 }
 
 .logo-text {
-    position: absolute;
-    bottom: 60px;     
-    right: -35px;       
+    position: relative;    
+    left: 233.5px;
+    bottom: 91px;       
     font-family: 'Gelasio', serif;
     font-weight: 500;
-    font-size: 23px;   
+    font-size: 24px;   
     color: #081F32;
     white-space: nowrap;
 }
@@ -159,7 +167,8 @@ header a.btn {
     text-transform: uppercase; 
     text-decoration-color: #1B75BB; 
     margin-bottom: 12px;
-     margin-top: -8px;
+    margin-top: -65px;
+    margin-left: 150px;
 }
 
 .hero--info h1{
@@ -169,12 +178,12 @@ header a.btn {
     font-size: 54px;
     line-height: 1.25;
     letter-spacing: 0%;
-    margin-top: 19px;
+    margin-left: 148px;
+    margin-top: 20px;
 }
 
 .hero--info {
     padding-top: 140px; 
-    max-width: 480px;
 }
 
 .hero--info p{
@@ -184,13 +193,14 @@ header a.btn {
     margin-bottom: 30px;
     font-weight: 400;
     letter-spacing: 0%;
-    margin-top: 27px;
+    margin-top: 26px;
+    margin-left: 150px;
 
 }
 
 .btn1 {
     background: #1B75BB;
-    padding: 20px 30px;
+    padding: 16px 30px;
     border-radius: 5px;
     color: white;
     font-size: 16px;        
@@ -200,6 +210,8 @@ header a.btn {
     margin-top: -2px;
     cursor: pointer;
     border: none;
+    margin-left: 148px;
+    line-height: 160%;
 }
 
 .blue {
@@ -208,22 +220,25 @@ header a.btn {
 
 .reservation { 
     position: relative; 
-    bottom: -205px;
-    left: 100px;
+    bottom: -46px;
+    right: -116px;
     background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(235, 234, 230, 1) 100%);
-    padding: 0px 30px; 
+    padding: 20px 30px; 
     border-radius: 10px; 
     display: flex; 
     align-items: center; 
-    gap: 30px; 
+    gap: 17px; 
     width: 687px; 
-    height: 110px;
+    height: auto;
 }
 
 .reservation-item {
     flex: 1;
-    border-right: 3px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9; 
     padding-right: 20px;
+    justify-content: center;
+    gap: 8px;
+    flex-direction: column;
 }
 
 .reservation-item:last-child {
@@ -234,24 +249,61 @@ header a.btn {
     display: block;
     font-size: 16px;
     color: #6E7A8A;
-    margin-bottom: 16px;
+    letter-spacing: 0%;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.label-checkin {
+    margin-left: 18px;
+    padding-top: 5px;
+}
+
+.value-checkin {
+    margin-left: 18px;
+    margin-top: 17px;
+}
+
+
+.label-checkout {
+    margin-left: 8px;
+    margin-top: -7px;
+}
+
+.value-checkout {
+    margin-left: 8px;
+    transform: translateY(15px);
+}
+
+
+.label-person {
+    margin-left: -2px;
+    margin-top: -8px;
+}
+
+.value-person {
+    margin-left: -2px;
+    transform: translateY(15px);
 }
 
 .value {
     font-size: 16px;
     color: #081F32;
-    font-weight: 500;
+    font-weight: 400;
+    display: block;
 }
 
 .find-room {
     background: #1B75BB;
     color: #fff;
-    padding: 18px 32px;
+    padding: 20px 27px; 
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     border: none;
     cursor: pointer;
+    white-space: nowrap;
+    margin-top: 7px;
 }
 
 .rectangle1 {
@@ -553,6 +605,12 @@ header a.btn {
 .testimonials {
     margin-top: 130px;
     margin-bottom: 120px;
+}
+
+.testimonials .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 40px;
 }
 
 .testimonials-header {
