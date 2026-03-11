@@ -308,10 +308,10 @@ header a.btn {
 
 .rectangle1 {
     position: absolute;
-    top: 0;
-    left: -35px;
-    width: 740px;
-    height: 370px;
+    top: -20px;
+    left: -12px;
+    width: 630px;
+    height: 325px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -335,10 +335,10 @@ header a.btn {
 
 .rectangle2 {
     position: absolute;
-    top: -90px;     
-    left: 200px;   
-    width: 584px;
-    height: 330px;
+    top: -79px;     
+    left: 190px;   
+    width: 484px;
+    height: 268px;
     border-radius: 10px;
     overflow: hidden;
 }
