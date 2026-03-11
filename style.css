@@ -360,11 +360,13 @@ header a.btn {
 .text-videos h2{
     color: #1B75BB;       
     font-weight: 500;      
-    font-size: 18px;       
-    letter-spacing: 6px;   
+    font-size: 20px;       
+    letter-spacing: 2px;   
     text-transform: uppercase; 
     text-decoration-color: #1B75BB;
-    margin-bottom: 20px; 
+    margin-bottom: 6px;
+    margin-left: -128px;
+    margin-top: -16px; 
 }
 
 .text-videos h1{
@@ -372,30 +374,32 @@ header a.btn {
     color: #000000;
     font-weight: 500;
     font-size: 32px;
-    line-height: 1.2;
-    margin-bottom: 20px;
+    line-height: 1.4;
+    margin-left: -128px;
+    margin-top: 20px;
 }
 
 .btn-view {
     background: #1B75BB;
-    padding: 17px 20px;
+    padding: 19px 31px;
     border-radius: 5px;
     color: white;
-    font-size: 23px;        
+    font-size: 16px;        
     font-weight: 500;
     text-decoration: none;  
     display: inline-block;
-    margin-top: 23px;
+    margin-top: 30px;
+    border:none;
+    margin-left: -128px;
     cursor: pointer;
 }
 
 .ripples {
     position: absolute;
-    top: 180px;     
-    left: -150px;   
-    width: 300px;
-    height: 300px;
-    border-radius: 10px;
+    top: 155px;     
+    left: -99px;   
+    width: 228px;
+    height: 228px;
     overflow: hidden;
 }
 
@@ -424,8 +428,10 @@ header a.btn {
     width: 0;
     height: 0;
     border-left: 25px solid #1B75BB;
-    border-top: 15px solid transparent;
+    border-top: 16px solid transparent;
     border-bottom: 15px solid transparent;
+    margin-left: 5px;
+    margin-top: -3px;
 }
 
 .features { 
