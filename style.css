@@ -450,19 +450,20 @@ header a.btn {
     font-size: 32px; 
     font-weight: 500; 
     color: #081F32;  
-    margin-top:140px;
+    margin-top: -205px;
     text-align: center;
     line-height: 1.4;
+    margin-left: -166px;
 } 
 .features-header p { 
     font-size: 18px; 
     color: #6E7A8A; 
-    font-weight: 400px;
     margin: 0 auto 60px; 
     line-height: 1.6; 
     margin-top:25px;
     text-align: center;
     letter-spacing: 0;
+    margin-left: -155px;
 }
 
 .features-grid {
