@@ -540,6 +540,9 @@ header a.btn {
     font-size: 32px;
     line-height: 1.4;
     color: #081F32;
+    font-weight: 500;
+    margin-left: 110px;
+    margin-top: 37px;
 }
 
 .gallery-header p {
@@ -548,17 +551,21 @@ header a.btn {
     color: #6E7A8A;
     margin-top: 20px;
     max-width: 440px;
+    font-weight: 400;
+    margin-left: 109px;
+    margin-top: 27px;
 }
 
 .gallery-header .btn2 {
     background: #1B75BB;
-    padding: 17px 20px;
+    padding: 17px 30px;
     border-radius: 5px;
     color: white;
-    font-size: 23px;
+    font-size: 16px;
     font-weight: 500;
     display: inline-block;
-    margin-top: 30px;
+    margin-top: 28px;
+    margin-left: 108px;
     cursor: pointer;
 }
 
