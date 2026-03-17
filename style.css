@@ -947,7 +947,8 @@ header a.btn {
     color: #081F32;
     opacity: 0.8;
     line-height: 1.5;
-    margin-bottom: 10px;
+    margin-top:-20px;
+    margin-left: -80px;
 }
 
 
@@ -958,8 +959,9 @@ header a.btn {
     line-height: 1.4; 
     color: #081F32;   
     text-align: center;
-    margin-bottom: 30px;
+    margin-top: 22px;
     white-space: nowrap;
+    margin-left: -95px;
 }
 
 
@@ -970,13 +972,16 @@ header a.btn {
 }
 
 .subscribe-form input {
+    font-family: Poppins;
     width: 100%;
     height: 54px;
-    padding: 0 20px;
+    padding: 0 30px;
     border-radius: 5px;
     border: 1px solid rgba(0,0,0,0.1);
     font-size: 16px;
     color: #081F32;
+    margin-left:-83px;
+    margin-top:48px;
 }
 
 .subscribe-form button {
@@ -985,14 +990,17 @@ header a.btn {
     top: 50%;
     transform: translateY(-50%); 
     height: 54px;
-    padding: 0 32px;
+    padding: 0 46px;
     background: #1B75BB;
     color: #fff;
     border-radius: 5px;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
+    margin-top: 25px;
+    margin-right: 42px;
+    line-height: 1.5;
 }
 
 .footer {
