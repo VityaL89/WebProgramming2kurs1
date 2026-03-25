@@ -474,6 +474,7 @@ header a.btn {
     gap: 25px;
 }
 
+
 .features-grid .feature-card:nth-child(3) h3 {
     margin-top: 32px;
 }
@@ -1032,7 +1033,7 @@ header a.btn {
     line-height: 1.5; 
     max-width: 257px; 
     margin-top: 6px;
-    margin-left: -70px;
+    margin-left: -30px;
 }
 
 .footer-brand-row {
@@ -1046,7 +1047,7 @@ header a.btn {
     width: 144px;  
     height: 144px;
     margin-top: -57px;
-    margin-left: -93px;
+    margin-left: -52px;
 }
 
 .footer-brand-row h2 {
@@ -1067,7 +1068,7 @@ header a.btn {
     line-height: 1.6;                  
     display: block;
     margin-top: 32px; 
-    margin-left: -70px;   
+    margin-left: -30px;   
     letter-spacing: 0.06em;    
 }
 
@@ -1075,7 +1076,7 @@ header a.btn {
     display: flex;
     gap: 25px;                 
     margin-top: 14px; 
-    margin-left: -70px;         
+    margin-left: -30px;         
 }
 
 .footer-icons img {
@@ -1088,17 +1089,17 @@ header a.btn {
 
 .footer-column:nth-child(2) {
     padding-left: 55px;
-    margin-left: -142px;
+    margin-left: -102px;
     margin-top: -8px;
 }
 
 .footer-column:nth-child(3) {
-    margin-left: -110px;
+    margin-left: -70px;
     margin-top: -8px;
 }
 
 .footer-column:nth-child(4) {
-    margin-left: -131px;
+    margin-left: -91px;
     margin-top: -8px;
 }
 
