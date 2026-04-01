@@ -118,6 +118,9 @@ header a.btn {
     margin-left: -109px;
 }
 
+.burger-menu {
+    display: none; 
+}
 
 
 .main-banner {
@@ -1179,6 +1182,33 @@ header a.btn {
         background-image: none;
     }
 
+   .burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1000;
+    order: 2;
+    margin-left: auto; 
+    margin-right: 15px;
+    margin-top: -37px;
+} 
+
+    .burger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #081F32;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .burger-menu:hover span {
+        background-color: #1977CC;
+    }
+
     .container {
         width: 100%;
         max-width: 1600px;
@@ -1187,14 +1217,14 @@ header a.btn {
     }
 
     
-    header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0;
-        padding: 20px 40px;
-        max-width: 100%;
+   header {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 20px 40px;
+    max-width: 100%;
     }
+
 
     .logo {
         position: relative;
@@ -1254,11 +1284,13 @@ header a.btn {
     }
 
     header a.btn {
-        display: none;
-        padding: 10px 20px;
-        font-size: 14px;
-        margin-left: 0;
-        margin-bottom: 0;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    order: 3;
+    margin: 0;
+    margin-right: -55px;
+    margin-top: -38px;
     }
 
     
@@ -1900,6 +1932,771 @@ header a.btn {
     }
 }
 
+@media (max-width: 610px) {
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-size: 14px;
+        line-height: 1.45;
+        background: #fff;
+        overflow-x: hidden;
+        background-image: none;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 30px;
+        margin: 0 auto;
+    }
+
+    
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 16px 30px;
+        max-width: 100%;
+    }
+
+     .burger-menu {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1000;
+    order: 2; 
+    margin-right: 15px;
+    margin-top: -25px;
+    }   
+
+    .burger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #081F32;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .burger-menu:hover span {
+        background-color: #1977CC;
+    }
+
+    .logo {
+        position: relative;
+        width: auto;
+        height: auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-left: 0;
+    }
+
+    .logo-icon {
+        width: 100px; 
+        height: 100px;
+        margin-left: -24px; 
+        margin-top: -23px;
+        display: block;
+    }
+
+    .logo-text {
+        position: static;
+        font-family: 'Gelasio', serif;
+        font-weight: 500;
+        font-size: 18px;
+        color: #081F32;
+        white-space: nowrap;
+        margin: 0;
+        margin-left: -70px; 
+        margin-top: -25px;
+    }
+
+    header nav {
+        display: none;
+        width: 100%;
+        order: 3;
+        margin-top: 12px;
+    }
+
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    header nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        display: block;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+   header a.btn {
+    display: inline-block;
+    padding: 7px 16px;
+    font-size: 14px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: -25px;
+    order: 3;
+    margin-right:-40px;
+    }
+
+    
+   .main-banner {
+    height: auto;
+    min-height: 480px;
+    background-color: #fff; 
+    background-image: url('img/mebel.svg'); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+   .hero--info {
+        position: absolute;
+        top: 40px; 
+        left: 0;
+        right: 0;
+        z-index: 2;
+        padding: 0 12px 24px 12px;
+        text-align: center;
+        margin-top: 34px;
+    }
+
+    .hero--info h2 {
+        font-size: 11px;
+        letter-spacing: 2px;
+        margin: 0 0 8px 0;
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .hero--info h1 {
+        font-size: 26px; 
+        line-height: 1.3;
+        margin: 0 0 12px 0;
+        margin-left: 0;
+    }
+
+    .hero--info p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0 0 16px 0;
+        margin-left: 0;
+        margin-top: 0;
+        color: #6E7A8A;
+    }
+
+    .btn1 {
+        display: inline-block;
+        padding: 11px 20px;
+        font-size: 14px;
+        margin: 0 auto;
+        margin-left: 0;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    
+    .reservation {
+        position: relative;
+        bottom: 168px;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 12px 24px 12px;
+        padding: 16px 12px;
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 10px;
+        height: auto;
+        
+        
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .reservation-item {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #D9D9D9;
+        padding: 0 0 12px 0;
+        margin: 0;
+    }
+
+    .reservation-item:last-child {
+        border-bottom: none;
+    }
+
+    
+    .find-room {
+        grid-column: 1 / -1;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0 0 0;
+        margin-left: 0;
+        font-size: 14px;
+    }
+
+    .label {
+        font-size: 13px;
+        margin: 0 0 4px 0;
+        margin-left: 0;
+        padding-top: 0;
+    }
+
+    .value {
+        font-size: 14px;
+        margin: 0;
+        margin-left: 0;
+        transform: none;
+    }
+
+    
+    .videos {
+        width: 100%;
+        height: auto;
+        margin: -120px 0 0 0;
+        padding: 0 12px;
+        text-align: center;
+    }
+
+     .video-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 720px;
+        height: 240px;
+        margin: 0 auto 24px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    
+    .rectangle1,
+    .rectangle2 {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 48%; 
+        height: 200px;
+        margin: 0;
+        display: inline-block;
+    }
+
+    .text-videos {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top: 24px;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .text-videos h2 {
+        font-size: 13px;
+        margin: 0 0 8px 0;
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .text-videos h1 {
+        font-size: 22px; 
+        margin: 0 0 16px 0;
+        margin-left: 0;
+    }
+
+    .btn-view {
+        display: inline-block;
+        padding: 11px 20px;
+        font-size: 14px;
+        margin: 0 auto;
+        margin-left: 0;
+    }
+
+    .ripples {
+        display: none;
+    }
+
+    .play-btn {
+        width: 56px;
+        height: 56px;
+    }
+
+    .triangle {
+        border-left-width: 16px;
+        border-top-width: 10px;
+        border-bottom-width: 10px;
+        margin: 0;
+    }
+
+    .features {
+        margin-top: 64px;
+        padding: 0 12px;
+    }
+
+    .features-header h2 {
+        font-size: 22px; 
+        margin: 0 0 12px 0;
+        margin-left: 0;
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .features-header p {
+        font-size: 14px;
+        margin: 0 0 24px 0;
+        margin-left: 0;
+        text-align: center;
+        line-height: 1.6;
+    }
+
+   
+    .features-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 16px;
+        width: 100%;
+    }
+
+    .feature-card {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        margin-left: 0;
+        padding: 20px 16px;
+        height: auto;
+        text-align: center;
+    }
+
+    .feature-card h3 {
+        font-size: 16px;
+        margin: 16px 0 8px 0;
+        margin-left: 0;
+    }
+
+    .feature-card p {
+        font-size: 13px;
+        margin: 0;
+        margin-left: 0;
+        line-height: 1.6;
+    }
+
+    
+    .gallery {
+        margin: 64px 0;
+        padding: 0 12px;
+    }
+
+    .gallery .container {
+        position: relative; 
+        max-width: 1280px; 
+        margin: 0 auto; 
+        padding: 0 30px;
+        margin-left: -30px;
+    }
+
+    .gallery-header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .gallery-header h2 {
+        font-size: 22px;
+        margin: 0 0 12px 0;
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .gallery-header p {
+        font-size: 14px;
+        margin: 0 0 16px 0;
+        margin-left: 0;
+        line-height: 1.6;
+        max-width: 100%;
+    }
+
+    .gallery-header .btn2 {
+        display: inline-block;
+        padding: 11px 20px;
+        font-size: 14px;
+        margin: 0 auto;
+        margin-left: 0;
+    }
+
+    
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 16px;
+        width: 100%;
+    }
+
+    .room-card {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        margin-left: 0;
+        height: auto;
+    }
+
+    .room-card_image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .room-card_overlay {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 16px;
+        background: #e2e2e29c;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .room-card_top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .room-card_overlay h3 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .room-card_overlay p {
+        font-size: 14px;
+        margin: 5px 0;
+    }
+
+    .room-card_overlay button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+    }
+
+   
+    .testimonials {
+        margin: 64px 0;
+        padding: 0 12px;
+    }
+
+    .testimonials-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+        width: 100%;
+    }
+
+    .testimonials-header h2 {
+        font-size: 22px;
+        margin: 0;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .btn-view-all {
+        padding: 11px 20px;
+        font-size: 14px;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+   
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 16px;
+        width: 100%;
+        margin: 0;
+        margin-left: 0;
+    }
+
+    .testimonial-card {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding: 20px 16px;
+        margin: 0;
+    }
+
+    .testimonial-avatar {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 12px auto;
+    }
+
+    .testimonial-content {
+        margin: 0 0 16px 0;
+        margin-left: 0;
+        padding: 0;
+    }
+
+    .quote-box {
+        margin: 0 auto 8px auto;
+        margin-top: 0;
+        margin-left: -6px;
+    }
+
+    .testimonial-content p {
+        font-size: 14px;
+        margin: 0;
+        margin-left: 3px;
+        line-height: 1.6;
+    }
+
+    .testimonial-author h3 {
+        font-size: 16px;
+        margin: 0 0 4px 0;
+        margin-left: 0;
+        margin-top: 25px;
+    }
+
+    .testimonial-author span {
+        font-size: 12px;
+        margin: 0;
+        margin-left: 0;
+    }
+
+    
+    .subscribe-wrapper {
+        margin: 64px 12px;
+        padding: 0;
+    }
+
+    .subscribe-box {
+        width: 100%;
+        padding: 24px 16px;
+        border-radius: 10px;
+    }
+
+    .subscribe-box h2 {
+        font-size: 13px;
+        margin: 0 0 8px 0;
+        margin-left: 0;
+        margin-top: 0;
+        letter-spacing: 1px;
+    }
+
+    .subscribe-box p {
+        font-size: 18px;
+        margin: 0 0 20px 0;
+        margin-left: 0;
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    .subscribe-form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .subscribe-form input {
+        width: 100%;
+        height: 40px;
+        padding: 0 12px;
+        margin: 0 0 8px 0;
+        margin-left: 0;
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    .subscribe-form button {
+        position: static;
+        transform: none;
+        width: 100%;
+        height: 40px;
+        padding: 0;
+        margin: 0;
+        margin-right: 0;
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+   
+    .footer {
+        width: 100%;
+        height: auto;
+        padding: 40px 0 24px 0;
+        margin: 0;
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        margin-left: 0;
+        padding: 0 12px;
+    }
+
+    .footer-brand {
+        text-align: center;
+    }
+
+    .footer-brand-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 12px 0;
+    }
+
+    .footer-brand-row img {
+        width: 100px; 
+        height: 100px;
+        margin: 0;
+        margin-top: -42px;
+        margin-right: 144px; 
+    }
+
+    .footer-brand-row h2 {
+        font-size: 18px;
+        margin: 0;
+        margin-left: -70px; 
+        margin-top: -71px;
+    }
+
+    .footer-brand p,
+    .footer-brand span {
+        max-width: 100%;
+        margin: 0 0 8px 0;
+        margin-left: 6px;
+        text-align: center;
+    }
+
+    .footer-icons {
+        justify-content: center;
+        margin: 12px 0 0 0;
+        margin-left: 0;
+    }
+
+    .footer-column {
+        text-align: center;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .footer-column h3 {
+        font-size: 16px;
+        margin: 0 0 12px 0;
+    }
+
+    .footer-column a {
+        font-size: 14px;
+        margin: 0 0 8px 0;
+        display: block;
+    }
+
+    .footer-subscribe-form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .footer-subscribe-form input {
+        width: 100%;
+        height: 40px;
+        padding: 0 12px;
+        margin: 0 0 8px 0;
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    .footer-subscribe-form button {
+        position: static;
+        transform: none;
+        width: 100%;
+        height: 40px;
+        padding: 0;
+        margin: 0;
+        margin-right: 0;
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    .testimonial-card.active {
+        text-align: center;
+    }
+
+    .testimonial-card.active .testimonial-content {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .testimonial-card.active .testimonial-content p {
+        text-align: center;
+        margin-left: 7px;
+        margin-top: 8px;
+    }
+
+    .testimonial-card.active .testimonial-author h3 {
+        text-align: center;
+        margin-left: 11px;
+        margin-top: 22px;
+        font-size: 16px;
+    }
+
+    .testimonial-card.active .testimonial-author span {
+        text-align: center;
+        margin-left: 9px;
+        font-size: 12px;
+    }
+
+    .testimonial-card.active .quote-box-active {
+        margin: 0 auto 8px auto;
+        margin-left: -6px;
+        margin-right: auto;
+    }
+
+    
+    .testimonial-card.active .ravi-name {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .testimonial-card.active .ravi-email {
+        margin-left: 0;
+        text-align: center;
+    }   
+
+    .testimonial-card.active .ravi-text {
+        margin-left: 0;
+        text-align: center;
+    }
+}
+
 @media (max-width: 450px) {
     * {
         margin: 0;
@@ -1930,6 +2727,32 @@ header a.btn {
         width: 100%;
     }
 
+    .burger-menu {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1000;
+    order: 2; 
+    margin-right: 5px;
+    margin-top: -7px;
+    }   
+
+    .burger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #081F32;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .burger-menu:hover span {
+        background-color: #1977CC;
+    }
+
     .logo {
         display: flex;
         align-items: center;
@@ -1955,7 +2778,15 @@ header a.btn {
     }
 
     header nav { display: none; }
-    header a.btn { display: none; }
+    
+    header a.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    order: 3;
+    margin-top: -10px;
+    margin-right: -20px;
+    }
 
     .main-banner {
         height: auto;
@@ -2523,6 +3354,32 @@ header a.btn {
         width: 100%;
     }
 
+    .burger-menu {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 17px;
+    cursor: pointer;
+    z-index: 1000;
+    order: 2; 
+    margin-right: 4px;
+    margin-top: -5px;
+    }   
+
+    .burger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #081F32;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .burger-menu:hover span {
+        background-color: #1977CC;
+    }
+
     .logo {
         display: flex;
         align-items: center;
@@ -2548,7 +3405,15 @@ header a.btn {
     }
 
     header nav { display: none; }
-    header a.btn { display: none; }
+    
+    header a.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 12px;
+    order: 3;
+    margin-right: -15px;
+    margin-top: -8px;
+    }
 
     .main-banner {
         height: auto;
