@@ -1,0 +1,155 @@
+.hero--info {
+    animation: heroFade 1.8s ease-in-out forwards;
+}
+
+@keyframes heroFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn1 {
+    transition: 
+        transform .35s ease,
+        box-shadow .35s ease;
+}
+
+.btn1:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(27, 117, 187, 0.35);
+}
+
+.btn {
+    transition: background-color .4s ease;
+}
+
+.btn:hover {
+    background-color: #145a8f;
+}
+
+.feature-card {
+    transition: transform .4s cubic-bezier(.25,.8,.25,1);
+}
+
+.feature-card:hover {
+    transform: scale(1.05);
+}
+
+.play-btn {
+    animation: rotatePlay 6s linear infinite;
+}
+
+@keyframes rotatePlay {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.room-card_image {
+    animation: fadeImg 1.5s ease-in-out forwards;
+}
+
+@keyframes fadeImg {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.testimonial-card {
+    transition: transform .4s ease-out;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+}
+
+.quote-box,
+.quote-box-active {
+    animation: blinkQuote 2s infinite ease-in-out;
+}
+
+@keyframes blinkQuote {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+}
+
+.feature-card {
+    transition: box-shadow .4s ease-in;
+}
+
+.feature-card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.subscribe-form button {
+    transition: width .5s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.subscribe-form button:hover {
+    width: 180px;
+}
+
+.features-header h2:hover {
+    transform: skewX(5deg);
+    transition: transform .4s ease;
+}
+
+.feature-card:hover {
+    border-width: 4px;
+    transition: border-width .4s ease-in-out;
+}
+
+.gallery-grid img {
+    transition: filter .6s cubic-bezier(.55, .06, .68, .19);
+}
+
+.gallery-grid img:hover {
+    filter: saturate(2);
+}
+
+@keyframes overlayBorderGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(27, 117, 187, 0.0);
+    }
+    50% {
+        box-shadow: 0 0 14px 4px rgba(0, 145, 255, 0.425);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(27, 117, 187, 0.0);
+    }
+}
+
+.room-card_overlay {
+    animation: overlayBorderGlow 3.2s ease-in-out infinite;
+    border-radius: 12px;
+}
+
+
+.room-card {
+    transition: box-shadow .5s ease;
+}
+
+.room-card:hover {
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.footer-icons img {
+    transition: 
+        transform .35s ease,
+        opacity .35s ease;
+}
+
+.footer-icons img:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.reservation {
+    transition: 
+        transform .45s ease,
+        box-shadow .45s ease,
+        background .45s ease;
+}
+
+.reservation:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(240,239,235,1) 100%);
+}
