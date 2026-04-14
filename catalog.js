@@ -166,18 +166,21 @@ const roomsCatalog = [
     }
 ];
 
-// Сохраняем оригинальный массив
 let originalRooms = [...roomsCatalog];
 let currentRooms = [...roomsCatalog];
+
+let currentSearchTerm = '';
+let currentCategory = 'all';
+let currentSort = 'default';
 
 function displayRooms(rooms) {
     const container = document.getElementById('catalog-container');
     
     if (!rooms || rooms.length === 0) {
         container.innerHTML = `
-            <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-                <h3 style="font-family: 'Gelasio', serif; font-size: 24px; color: #081F32; margin-bottom: 15px;">No rooms found</h3>
-                <p style="font-size: 16px; color: #6E7A8A;">Please try different search criteria.</p>
+            <div class="no-results">
+                <h3>No rooms found</h3>
+                <p>Please try different search criteria.</p>
             </div>
         `;
         return;
@@ -185,7 +188,7 @@ function displayRooms(rooms) {
     
     container.innerHTML = rooms.map(room => `
         <div class="room-card">
-            <img src="${room.imageUrl}" class="room-card_image" alt="${room.name}">
+            <img src="${room.imageUrl}" class="room-card_image" alt="${room.name}" onerror="this.src='img/LuxRoom.svg'">
             <div class="room-card_overlay">
                 <div class="room-card_top">
                     <h3>${room.name}</h3>
@@ -217,20 +220,126 @@ function displayRooms(rooms) {
     });
 }
 
-// Обновление информации
-function updateInfo(message) {
+function updateInfo(message, isError = false) {
     const badge = document.getElementById('info-badge');
     if (badge) {
         badge.innerHTML = message;
+        badge.style.background = isError ? '#ffe8e8' : '#e8f0fe';
+        badge.style.color = isError ? '#d32f2f' : '#1B75BB';
         setTimeout(() => {
             if (badge.innerHTML === message) {
                 badge.innerHTML = 'Click any button to apply array method';
+                badge.style.background = '#e8f0fe';
+                badge.style.color = '#1B75BB';
             }
         }, 3000);
     }
 }
 
-// 1. MAP - Применяет скидку 10%
+
+function applyFilters() {
+    let filteredRooms = [...originalRooms];
+    
+    if (currentCategory !== 'all') {
+        filteredRooms = filteredRooms.filter(room => room.category === currentCategory);
+    }
+    
+    if (currentSearchTerm.trim() !== '') {
+        const searchLower = currentSearchTerm.toLowerCase();
+        filteredRooms = filteredRooms.filter(room => 
+            room.name.toLowerCase().includes(searchLower) ||
+            room.description.toLowerCase().includes(searchLower)
+        );
+    }
+    
+    if (currentSort === 'price-asc') {
+        filteredRooms.sort((a, b) => a.price - b.price);
+    } else if (currentSort === 'price-desc') {
+        filteredRooms.sort((a, b) => b.price - a.price);
+    } else if (currentSort === 'rating-desc') {
+        filteredRooms.sort((a, b) => b.rating - a.rating);
+    } else if (currentSort === 'name-asc') {
+        filteredRooms.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    
+    currentRooms = filteredRooms;
+    displayRooms(currentRooms);
+    
+    if (filteredRooms.length === 0) {
+        updateInfo('❌ No rooms found matching your criteria', true);
+    } else {
+        let message = `Found ${filteredRooms.length} room${filteredRooms.length !== 1 ? 's' : ''}`;
+        if (currentCategory !== 'all') message += ` in ${currentCategory}`;
+        if (currentSearchTerm) message += ` matching "${currentSearchTerm}"`;
+        updateInfo(message);
+    }
+}
+
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value;
+            applyFilters();
+        });
+    }
+}
+
+function setupSort() {
+    const sortSelect = document.getElementById('sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            applyFilters();
+        });
+    }
+}
+
+function setupCategoryFilters() {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+         
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            
+            btn.classList.add('active');
+            
+            currentCategory = btn.getAttribute('data-category');
+            applyFilters();
+        });
+    });
+}
+
+
+function resetFilters() {
+    currentSearchTerm = '';
+    currentCategory = 'all';
+    currentSort = 'default';
+    
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) searchInput.value = '';
+    
+
+    const sortSelect = document.getElementById('sort-select');
+    if (sortSelect) sortSelect.value = 'default';
+
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        if (btn.getAttribute('data-category') === 'all') {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+
+    currentRooms = [...originalRooms];
+    displayRooms(currentRooms);
+    updateInfo('🔄 All filters reset');
+}
+
+
 function applyMap() {
     const discountedRooms = currentRooms.map(room => ({
         ...room,
@@ -238,84 +347,78 @@ function applyMap() {
         name: `${room.name} 🔥`
     }));
     displayRooms(discountedRooms);
-    updateInfo('MAP: 10% discount applied to all rooms!');
+    updateInfo('✅ MAP: 10% discount applied to all rooms!');
 }
 
-// 2. FILTER - Показывает комнаты дороже $80
+
 function applyFilter() {
     const filteredRooms = currentRooms.filter(room => room.price > 80);
     displayRooms(filteredRooms);
-    updateInfo(`FILTER: Showing ${filteredRooms.length} rooms with price > $80`);
+    updateInfo(`🔍 FILTER: Showing ${filteredRooms.length} rooms with price > $80`);
 }
 
-// 3. SORT - Сортировка по цене
+
 function sortByPrice() {
     const sortedRooms = [...currentRooms].sort((a, b) => a.price - b.price);
     displayRooms(sortedRooms);
-    updateInfo('SORT: Rooms sorted by price (lowest to highest)');
+    updateInfo('💰 SORT: Rooms sorted by price (lowest to highest)');
 }
 
-// 4. SORT - Сортировка по рейтингу
 function sortByRating() {
     const sortedRooms = [...currentRooms].sort((a, b) => b.rating - a.rating);
     displayRooms(sortedRooms);
-    updateInfo('SORT: Rooms sorted by rating (highest first)');
+    updateInfo('⭐ SORT: Rooms sorted by rating (highest first)');
 }
 
-// 5. SORT - Сортировка по имени
 function sortByName() {
     const sortedRooms = [...currentRooms].sort((a, b) => a.name.localeCompare(b.name));
     displayRooms(sortedRooms);
-    updateInfo('SORT: Rooms sorted alphabetically by name');
+    updateInfo('🔤 SORT: Rooms sorted alphabetically by name');
 }
 
-// 6. forEach - Вывод в консоль
 function applyForEach() {
-    console.log('forEach: List of all room names:');
+    console.log('📝 forEach: List of all room names:');
     currentRooms.forEach((room, index) => {
         console.log(`  ${index + 1}. ${room.name} - $${room.price}/night`);
     });
-    updateInfo('forEach: Check console for list of all room names!');
+    updateInfo('📝 forEach: Check console for list of all room names!');
     displayRooms(currentRooms);
 }
 
-// 7. FIND - Поиск Luxury Suite (показывает результат в виде карточки, но с сохранением сетки)
 function applyFind() {
     const foundRoom = currentRooms.find(room => room.name.includes("Luxury Suite"));
     if (foundRoom) {
         displayRooms([foundRoom]);
-        updateInfo(`FIND: Found "${foundRoom.name}" - $${foundRoom.price}/night`);
+        updateInfo(`🎯 FIND: Found "${foundRoom.name}" - $${foundRoom.price}/night`);
     } else {
-        updateInfo('FIND: Luxury Suite not found in current results');
+        updateInfo('🎯 FIND: Luxury Suite not found in current results', true);
         displayRooms(currentRooms);
     }
 }
 
-// 8. SOME - Проверка на рейтинг 5.0
 function applySome() {
     const hasPerfectRating = currentRooms.some(room => room.rating === 5.0);
-    updateInfo(`SOME: ${hasPerfectRating ? 'YES, there is a room with 5.0 rating!' : 'NO rooms with 5.0 rating found'}`);
+    updateInfo(`✅ SOME: ${hasPerfectRating ? 'YES, there is a room with 5.0 rating!' : 'NO rooms with 5.0 rating found'}`);
     displayRooms(currentRooms);
 }
 
-// 9. EVERY - Проверка цены > $40
 function applyEvery() {
     const allAbove40 = currentRooms.every(room => room.price > 40);
-    updateInfo(`EVERY: ${allAbove40 ? 'YES, all rooms cost more than $40!' : 'NO, some rooms cost $40 or less'}`);
+    updateInfo(`📋 EVERY: ${allAbove40 ? 'YES, all rooms cost more than $40!' : 'NO, some rooms cost $40 or less'}`);
     displayRooms(currentRooms);
 }
 
 function applyReduce() {
     const totalPrice = currentRooms.reduce((sum, room) => sum + room.price, 0);
     const averagePrice = (totalPrice / currentRooms.length).toFixed(2);
-    updateInfo(`REDUCE: Total value: $${totalPrice} | Average: $${averagePrice}`);
+    updateInfo(`💰 REDUCE: Total value: $${totalPrice} | Average: $${averagePrice}`);
     displayRooms(currentRooms);
 }
 
 function resetCatalog() {
     currentRooms = [...originalRooms];
     displayRooms(currentRooms);
-    updateInfo('RESET: Catalog restored to original state');
+    updateInfo('🔄 RESET: Catalog restored to original state');
 }
 
 function setupMethodButtons() {
@@ -346,4 +449,12 @@ function setupMethodButtons() {
 document.addEventListener('DOMContentLoaded', () => {
     displayRooms(roomsCatalog);
     setupMethodButtons();
+    setupSearch();
+    setupSort();
+    setupCategoryFilters();
+    
+    const resetFiltersBtn = document.getElementById('reset-filters');
+    if (resetFiltersBtn) {
+        resetFiltersBtn.addEventListener('click', resetFilters);
+    }
 });
