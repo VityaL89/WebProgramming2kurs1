@@ -183,7 +183,7 @@ feature-card {
     left: 0;
     width: 0%;          
     height: 4px;
-    background-color: #1b75bb;
+    background-color: #1c75b9;
     transition: width 0.4s ease-in-out; 
 }
 
