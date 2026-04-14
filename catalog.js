@@ -1,4 +1,3 @@
-
 const roomsCatalog = [
     {
         id: 1,
@@ -167,12 +166,16 @@ const roomsCatalog = [
     }
 ];
 
+// Сохраняем оригинальный массив
+let originalRooms = [...roomsCatalog];
+let currentRooms = [...roomsCatalog];
+
 function displayRooms(rooms) {
     const container = document.getElementById('catalog-container');
     
     if (!rooms || rooms.length === 0) {
         container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+            <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
                 <h3 style="font-family: 'Gelasio', serif; font-size: 24px; color: #081F32; margin-bottom: 15px;">No rooms found</h3>
                 <p style="font-size: 16px; color: #6E7A8A;">Please try different search criteria.</p>
             </div>
@@ -181,23 +184,23 @@ function displayRooms(rooms) {
     }
     
     container.innerHTML = rooms.map(room => `
-        <div class="room-card" style="position: relative; width: 100%; border-radius: 10px; overflow: hidden; margin: 0;">
-            <img src="${room.imageUrl}" class="room-card_image" style="width: 100%; height: 250px; object-fit: cover;" alt="${room.name}">
-            <div class="room-card_overlay" style="position: relative; bottom: 0; left: 0; background: #fff; padding: 20px; border: 1px solid #E0E0E0; border-top: none; border-radius: 0 0 10px 10px; width: 100%; height: auto;">
-                <div class="room-card_top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h3 style="font-family: 'Gelasio', serif; font-size: 20px; color: #081F32; margin: 0;">${room.name}</h3>
-                    <p style="font-size: 16px; color: #1B75BB; font-weight: 600; margin: 0;">$${room.price} <span style="font-size: 12px; color: #6E7A8A;">/night</span></p>
+        <div class="room-card">
+            <img src="${room.imageUrl}" class="room-card_image" alt="${room.name}">
+            <div class="room-card_overlay">
+                <div class="room-card_top">
+                    <h3>${room.name}</h3>
+                    <div class="room-price">$${room.price} <span>/night</span></div>
                 </div>
-                <div style="margin-bottom: 10px;">
-                    <span style="display: inline-block; padding: 4px 12px; background: #e8f0fe; color: #1B75BB; font-size: 12px; font-weight: 500; border-radius: 20px;">${room.category}</span>
-                    <span style="display: inline-block; margin-left: 10px; color: #FFB800;">★ ${room.rating}</span>
+                <div class="room-meta">
+                    <span class="room-category">${room.category}</span>
+                    <span class="room-rating">★ ${room.rating}</span>
                 </div>
-                <p style="font-size: 14px; color: #6E7A8A; line-height: 1.5; margin-bottom: 15px;">${room.description}</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
-                    ${room.amenities.slice(0, 3).map(amenity => `<span style="font-size: 11px; color: #6E7A8A; background: #f5f5f5; padding: 4px 8px; border-radius: 4px;">${amenity}</span>`).join('')}
-                    ${room.amenities.length > 3 ? `<span style="font-size: 11px; color: #6E7A8A;">+${room.amenities.length - 3} more</span>` : ''}
+                <p class="room-description">${room.description}</p>
+                <div class="room-amenities">
+                    ${room.amenities.slice(0, 3).map(amenity => `<span class="amenity-tag">${amenity}</span>`).join('')}
+                    ${room.amenities.length > 3 ? `<span class="amenity-tag">+${room.amenities.length - 3} more</span>` : ''}
                 </div>
-                <button class="book-btn" data-id="${room.id}" style="background: #1B75BB; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; transition: background 0.3s;">Book now</button>
+                <button class="book-btn" data-id="${room.id}">Book now</button>
             </div>
         </div>
     `).join('');
@@ -214,6 +217,133 @@ function displayRooms(rooms) {
     });
 }
 
+// Обновление информации
+function updateInfo(message) {
+    const badge = document.getElementById('info-badge');
+    if (badge) {
+        badge.innerHTML = message;
+        setTimeout(() => {
+            if (badge.innerHTML === message) {
+                badge.innerHTML = 'Click any button to apply array method';
+            }
+        }, 3000);
+    }
+}
+
+// 1. MAP - Применяет скидку 10%
+function applyMap() {
+    const discountedRooms = currentRooms.map(room => ({
+        ...room,
+        price: Math.round(room.price * 0.9),
+        name: `${room.name} 🔥`
+    }));
+    displayRooms(discountedRooms);
+    updateInfo('MAP: 10% discount applied to all rooms!');
+}
+
+// 2. FILTER - Показывает комнаты дороже $80
+function applyFilter() {
+    const filteredRooms = currentRooms.filter(room => room.price > 80);
+    displayRooms(filteredRooms);
+    updateInfo(`FILTER: Showing ${filteredRooms.length} rooms with price > $80`);
+}
+
+// 3. SORT - Сортировка по цене
+function sortByPrice() {
+    const sortedRooms = [...currentRooms].sort((a, b) => a.price - b.price);
+    displayRooms(sortedRooms);
+    updateInfo('SORT: Rooms sorted by price (lowest to highest)');
+}
+
+// 4. SORT - Сортировка по рейтингу
+function sortByRating() {
+    const sortedRooms = [...currentRooms].sort((a, b) => b.rating - a.rating);
+    displayRooms(sortedRooms);
+    updateInfo('SORT: Rooms sorted by rating (highest first)');
+}
+
+// 5. SORT - Сортировка по имени
+function sortByName() {
+    const sortedRooms = [...currentRooms].sort((a, b) => a.name.localeCompare(b.name));
+    displayRooms(sortedRooms);
+    updateInfo('SORT: Rooms sorted alphabetically by name');
+}
+
+// 6. forEach - Вывод в консоль
+function applyForEach() {
+    console.log('forEach: List of all room names:');
+    currentRooms.forEach((room, index) => {
+        console.log(`  ${index + 1}. ${room.name} - $${room.price}/night`);
+    });
+    updateInfo('forEach: Check console for list of all room names!');
+    displayRooms(currentRooms);
+}
+
+// 7. FIND - Поиск Luxury Suite (показывает результат в виде карточки, но с сохранением сетки)
+function applyFind() {
+    const foundRoom = currentRooms.find(room => room.name.includes("Luxury Suite"));
+    if (foundRoom) {
+        displayRooms([foundRoom]);
+        updateInfo(`FIND: Found "${foundRoom.name}" - $${foundRoom.price}/night`);
+    } else {
+        updateInfo('FIND: Luxury Suite not found in current results');
+        displayRooms(currentRooms);
+    }
+}
+
+// 8. SOME - Проверка на рейтинг 5.0
+function applySome() {
+    const hasPerfectRating = currentRooms.some(room => room.rating === 5.0);
+    updateInfo(`SOME: ${hasPerfectRating ? 'YES, there is a room with 5.0 rating!' : 'NO rooms with 5.0 rating found'}`);
+    displayRooms(currentRooms);
+}
+
+// 9. EVERY - Проверка цены > $40
+function applyEvery() {
+    const allAbove40 = currentRooms.every(room => room.price > 40);
+    updateInfo(`EVERY: ${allAbove40 ? 'YES, all rooms cost more than $40!' : 'NO, some rooms cost $40 or less'}`);
+    displayRooms(currentRooms);
+}
+
+function applyReduce() {
+    const totalPrice = currentRooms.reduce((sum, room) => sum + room.price, 0);
+    const averagePrice = (totalPrice / currentRooms.length).toFixed(2);
+    updateInfo(`REDUCE: Total value: $${totalPrice} | Average: $${averagePrice}`);
+    displayRooms(currentRooms);
+}
+
+function resetCatalog() {
+    currentRooms = [...originalRooms];
+    displayRooms(currentRooms);
+    updateInfo('RESET: Catalog restored to original state');
+}
+
+function setupMethodButtons() {
+    const buttons = document.querySelectorAll('.method-btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const method = btn.getAttribute('data-method');
+            
+            switch(method) {
+                case 'map': applyMap(); break;
+                case 'filter': applyFilter(); break;
+                case 'sortPrice': sortByPrice(); break;
+                case 'sortRating': sortByRating(); break;
+                case 'sortName': sortByName(); break;
+                case 'forEach': applyForEach(); break;
+                case 'find': applyFind(); break;
+                case 'some': applySome(); break;
+                case 'every': applyEvery(); break;
+                case 'reduce': applyReduce(); break;
+                case 'reset': resetCatalog(); break;
+                default: break;
+            }
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     displayRooms(roomsCatalog);
+    setupMethodButtons();
 });
