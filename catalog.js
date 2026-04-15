@@ -176,6 +176,8 @@ let currentSort = 'default';
 function displayRooms(rooms) {
     const container = document.getElementById('catalog-container');
     
+    if (!container) return;
+    
     if (!rooms || rooms.length === 0) {
         container.innerHTML = `
             <div class="no-results">
@@ -191,16 +193,16 @@ function displayRooms(rooms) {
             <img src="${room.imageUrl}" class="room-card_image" alt="${room.name}" onerror="this.src='img/LuxRoom.svg'">
             <div class="room-card_overlay">
                 <div class="room-card_top">
-                    <h3>${room.name}</h3>
+                    <h3>${escapeHtml(room.name)}</h3>
                     <div class="room-price">$${room.price} <span>/night</span></div>
                 </div>
                 <div class="room-meta">
                     <span class="room-category">${room.category}</span>
                     <span class="room-rating">★ ${room.rating}</span>
                 </div>
-                <p class="room-description">${room.description}</p>
+                <p class="room-description">${escapeHtml(room.description)}</p>
                 <div class="room-amenities">
-                    ${room.amenities.slice(0, 3).map(amenity => `<span class="amenity-tag">${amenity}</span>`).join('')}
+                    ${room.amenities.slice(0, 3).map(amenity => `<span class="amenity-tag">${escapeHtml(amenity)}</span>`).join('')}
                     ${room.amenities.length > 3 ? `<span class="amenity-tag">+${room.amenities.length - 3} more</span>` : ''}
                 </div>
                 <button class="book-btn" data-id="${room.id}">Book now</button>
@@ -220,6 +222,16 @@ function displayRooms(rooms) {
     });
 }
 
+function escapeHtml(str) {
+    if (!str) return '';
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function updateInfo(message, isError = false) {
     const badge = document.getElementById('info-badge');
     if (badge) {
@@ -235,7 +247,6 @@ function updateInfo(message, isError = false) {
         }, 3000);
     }
 }
-
 
 function applyFilters() {
     let filteredRooms = [...originalRooms];
@@ -299,31 +310,25 @@ function setupCategoryFilters() {
     const categoryBtns = document.querySelectorAll('.category-btn');
     categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-         
             categoryBtns.forEach(b => b.classList.remove('active'));
-            
             btn.classList.add('active');
-            
             currentCategory = btn.getAttribute('data-category');
             applyFilters();
         });
     });
 }
 
-
 function resetFilters() {
     currentSearchTerm = '';
     currentCategory = 'all';
     currentSort = 'default';
     
-
     const searchInput = document.getElementById('search-input');
     if (searchInput) searchInput.value = '';
     
-
     const sortSelect = document.getElementById('sort-select');
     if (sortSelect) sortSelect.value = 'default';
-
+    
     const categoryBtns = document.querySelectorAll('.category-btn');
     categoryBtns.forEach(btn => {
         if (btn.getAttribute('data-category') === 'all') {
@@ -333,12 +338,10 @@ function resetFilters() {
         }
     });
     
-
     currentRooms = [...originalRooms];
     displayRooms(currentRooms);
     updateInfo('🔄 All filters reset');
 }
-
 
 function applyMap() {
     const discountedRooms = currentRooms.map(room => ({
@@ -350,38 +353,36 @@ function applyMap() {
     updateInfo('✅ MAP: 10% discount applied to all rooms!');
 }
 
-
 function applyFilter() {
     const filteredRooms = currentRooms.filter(room => room.price > 80);
     displayRooms(filteredRooms);
-    updateInfo(`🔍 FILTER: Showing ${filteredRooms.length} rooms with price > $80`);
+    updateInfo(`FILTER: Showing ${filteredRooms.length} rooms with price > $80`);
 }
-
 
 function sortByPrice() {
     const sortedRooms = [...currentRooms].sort((a, b) => a.price - b.price);
     displayRooms(sortedRooms);
-    updateInfo('💰 SORT: Rooms sorted by price (lowest to highest)');
+    updateInfo('SORT: Rooms sorted by price (lowest to highest)');
 }
 
 function sortByRating() {
     const sortedRooms = [...currentRooms].sort((a, b) => b.rating - a.rating);
     displayRooms(sortedRooms);
-    updateInfo('⭐ SORT: Rooms sorted by rating (highest first)');
+    updateInfo('SORT: Rooms sorted by rating (highest first)');
 }
 
 function sortByName() {
     const sortedRooms = [...currentRooms].sort((a, b) => a.name.localeCompare(b.name));
     displayRooms(sortedRooms);
-    updateInfo('🔤 SORT: Rooms sorted alphabetically by name');
+    updateInfo('SORT: Rooms sorted alphabetically by name');
 }
 
 function applyForEach() {
-    console.log('📝 forEach: List of all room names:');
+    console.log('forEach: List of all room names:');
     currentRooms.forEach((room, index) => {
         console.log(`  ${index + 1}. ${room.name} - $${room.price}/night`);
     });
-    updateInfo('📝 forEach: Check console for list of all room names!');
+    updateInfo('forEach: Check console for list of all room names!');
     displayRooms(currentRooms);
 }
 
@@ -389,36 +390,36 @@ function applyFind() {
     const foundRoom = currentRooms.find(room => room.name.includes("Luxury Suite"));
     if (foundRoom) {
         displayRooms([foundRoom]);
-        updateInfo(`🎯 FIND: Found "${foundRoom.name}" - $${foundRoom.price}/night`);
+        updateInfo(`FIND: Found "${foundRoom.name}" - $${foundRoom.price}/night`);
     } else {
-        updateInfo('🎯 FIND: Luxury Suite not found in current results', true);
+        updateInfo('FIND: Luxury Suite not found in current results', true);
         displayRooms(currentRooms);
     }
 }
 
 function applySome() {
     const hasPerfectRating = currentRooms.some(room => room.rating === 5.0);
-    updateInfo(`✅ SOME: ${hasPerfectRating ? 'YES, there is a room with 5.0 rating!' : 'NO rooms with 5.0 rating found'}`);
+    updateInfo(`SOME: ${hasPerfectRating ? 'YES, there is a room with 5.0 rating!' : 'NO rooms with 5.0 rating found'}`);
     displayRooms(currentRooms);
 }
 
 function applyEvery() {
     const allAbove40 = currentRooms.every(room => room.price > 40);
-    updateInfo(`📋 EVERY: ${allAbove40 ? 'YES, all rooms cost more than $40!' : 'NO, some rooms cost $40 or less'}`);
+    updateInfo(`EVERY: ${allAbove40 ? 'YES, all rooms cost more than $40!' : 'NO, some rooms cost $40 or less'}`);
     displayRooms(currentRooms);
 }
 
 function applyReduce() {
     const totalPrice = currentRooms.reduce((sum, room) => sum + room.price, 0);
     const averagePrice = (totalPrice / currentRooms.length).toFixed(2);
-    updateInfo(`💰 REDUCE: Total value: $${totalPrice} | Average: $${averagePrice}`);
+    updateInfo(`REDUCE: Total value: $${totalPrice} | Average: $${averagePrice}`);
     displayRooms(currentRooms);
 }
 
 function resetCatalog() {
     currentRooms = [...originalRooms];
     displayRooms(currentRooms);
-    updateInfo('🔄 RESET: Catalog restored to original state');
+    updateInfo('RESET: Catalog restored to original state');
 }
 
 function setupMethodButtons() {
@@ -446,6 +447,24 @@ function setupMethodButtons() {
     });
 }
 
+function fixMobileHeader() {
+    if (window.innerWidth <= 360) {
+        const logoText = document.querySelector('.logo-text');
+        const btn = document.querySelector('header a.btn');
+        const burgerMenu = document.querySelector('.burger-menu');
+        
+        if (logoText) logoText.style.marginLeft = '-35px';
+        if (btn) btn.style.marginTop = '-20px';
+        if (burgerMenu) burgerMenu.style.marginTop = '-15px';
+    } else {
+        const logoText = document.querySelector('.logo-text');
+        const btn = document.querySelector('header a.btn');
+        
+        if (logoText) logoText.style.marginLeft = '';
+        if (btn) btn.style.marginTop = '';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     displayRooms(roomsCatalog);
     setupMethodButtons();
@@ -457,4 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resetFiltersBtn) {
         resetFiltersBtn.addEventListener('click', resetFilters);
     }
+    
+    fixMobileHeader();
+    window.addEventListener('resize', fixMobileHeader);
 });
