@@ -38,7 +38,7 @@
     transform: scale(1.05);
 }
 
-/* 5. Бесконечное вращение кнопки Play вокруг центра */
+/* 5. dБесконечное вращение кнопки Play вокруг центра */
 .play-btn {
     animation: rotatePlay 6s linear infinite;
 }

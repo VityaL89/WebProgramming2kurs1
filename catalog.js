@@ -277,7 +277,7 @@ function applyFilters() {
     displayRooms(currentRooms);
     
     if (filteredRooms.length === 0) {
-        updateInfo('❌ No rooms found matching your criteria', true);
+        updateInfo(' No rooms found matching your criteria', true);
     } else {
         let message = `Found ${filteredRooms.length} room${filteredRooms.length !== 1 ? 's' : ''}`;
         if (currentCategory !== 'all') message += ` in ${currentCategory}`;
@@ -340,17 +340,17 @@ function resetFilters() {
     
     currentRooms = [...originalRooms];
     displayRooms(currentRooms);
-    updateInfo('🔄 All filters reset');
+    updateInfo(' All filters reset');
 }
 
 function applyMap() {
     const discountedRooms = currentRooms.map(room => ({
         ...room,
         price: Math.round(room.price * 0.9),
-        name: `${room.name} 🔥`
+        name: `${room.name} `
     }));
     displayRooms(discountedRooms);
-    updateInfo('✅ MAP: 10% discount applied to all rooms!');
+    updateInfo(' MAP: 10% discount applied to all rooms!');
 }
 
 function applyFilter() {
@@ -422,6 +422,28 @@ function resetCatalog() {
     updateInfo('RESET: Catalog restored to original state');
 }
 
+function applySlice() {
+    const top3Rooms = currentRooms.slice(0, 3);
+    
+    displayRooms(top3Rooms);
+    updateInfo(`SLICE: Showing first 3 rooms (${top3Rooms.length} of ${currentRooms.length})`);
+}
+
+function applyConcat() {
+    const luxuryDeals = currentRooms.filter(room => room.category === "Luxury" && room.price < 130);
+    const familyDeals = currentRooms.filter(room => room.category === "Family" && room.price < 115);
+    
+    const bestDeals = luxuryDeals.concat(familyDeals);
+    
+    if (bestDeals.length > 0) {
+        displayRooms(bestDeals);
+        updateInfo(`CONCAT: Combined Luxury & Family deals - ${bestDeals.length} rooms found!`);
+    } else {
+        updateInfo('CONCAT: No special deals found in current results', true);
+        displayRooms(currentRooms);
+    }
+}
+
 function setupMethodButtons() {
     const buttons = document.querySelectorAll('.method-btn');
     
@@ -440,6 +462,8 @@ function setupMethodButtons() {
                 case 'some': applySome(); break;
                 case 'every': applyEvery(); break;
                 case 'reduce': applyReduce(); break;
+                case 'slice': applySlice(); break;     
+                case 'concat': applyConcat(); break;
                 case 'reset': resetCatalog(); break;
                 default: break;
             }
