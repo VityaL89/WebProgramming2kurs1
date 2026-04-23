@@ -398,6 +398,7 @@
         grid-column: 1 / -1;
         text-align: center;
         padding: 60px 20px;
+        margin-left: 266px;
     }
     
     .no-results h3 {
@@ -410,6 +411,41 @@
     .no-results p {
         font-size: 16px;
         color: #6E7A8A;
+    }
+
+    .pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+    }
+
+    .page-btn {
+        padding: 8px 15px;
+        border: 1px solid #1B75BB;
+        background: white;
+        color: #1B75BB;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .page-btn:hover {
+        background: #1B75BB;
+        color: white;
+    }
+
+    .page-btn.active {
+        background: #1B75BB;
+        color: white;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 60px;
+        font-size: 18px;
+        color: #1B75BB;
+        grid-column: 1 / -1;
     }
 
     
@@ -665,6 +701,8 @@
                     <li><a href="#">Features</a></li>
                     <li><a href="#">Gallery</a></li>
                     <li><a href="#">Testimonials</a></li>
+                    <li><a href="favorites.html">Favorites <span id="fav-count">(0)</span></a></li>
+                    <li><a href="cart.html">Cart <span id="cart-count">(0)</span></a></li>
                 </ul>
             </nav>
 
@@ -736,6 +774,7 @@
         </div>
 
         <div id="catalog-container" class="catalog-grid"></div>
+        
     </div>
 </main>
 

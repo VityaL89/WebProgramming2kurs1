@@ -30,6 +30,8 @@
                     <li><a href="#">Features</a></li>
                     <li><a href="#">Gallary</a></li>
                     <li><a href="#">Testimonials</a></li>
+                    <li><a href="favorites.html">Favorites <span id="fav-count">(0)</span></a></li>
+                    <li><a href="cart.html">Cart <span id="cart-count">(0)</span></a></li>
                 </ul>
             </nav>
 
@@ -314,6 +316,21 @@
     </div>
 </footer>
 </div>
+
+<script>
+    function updateHeaderCounts() {
+        const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        
+        const favSpan = document.getElementById('fav-count');
+        const cartSpan = document.getElementById('cart-count');
+        
+        if (favSpan) favSpan.textContent = `(${favs.length})`;
+        if (cartSpan) cartSpan.textContent = `(${cart.length})`;
+    }
+    
+    document.addEventListener('DOMContentLoaded', updateHeaderCounts);
+</script>
 
 </body>
 </html>
