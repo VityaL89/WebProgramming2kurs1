@@ -1,52 +1,37 @@
-const API_URL = 'http://localhost:3000/rooms';
+const ROOMS_URL = 'http://localhost:3000/rooms';
 
 async function loadFavorites() {
     const container = document.getElementById('favorites-container');
-    const storedFavs = localStorage.getItem('favorites');
-    console.log('Raw favorites from storage:', storedFavs);
-
-    let favoriteIds = [];
-    try {
-        favoriteIds = JSON.parse(storedFavs || '[]').map(id => Number(id));
-    } catch (e) {
-        console.error('Error parsing favorites:', e);
-        favoriteIds = [];
-    }
-
-    console.log('Parsed favorite IDs:', favoriteIds);
-    updateHeaderCounts();
+    
+    const favoriteIds = await getFavorites();
+    console.log('Favorite IDs from server:', favoriteIds);
+    
+    await updateHeaderCounts();
 
     if (favoriteIds.length === 0) {
         container.innerHTML = `
-             <div class="empty-message">
-                 <h3>No favorites yet</h3>
-                 <p>Browse our catalog and add rooms to your favorites!</p>
-                 <a href="catalog.html" class="book-btn" style="display:inline-block; margin-top:20px;">Browse Catalog</a>
-             </div>`;
+            <div class="empty-message">
+                <h3>No favorites yet</h3>
+                <p>Browse our catalog and add rooms to your favorites!</p>
+                <a href="catalog.html" class="book-btn" style="display:inline-block; margin-top:20px;">Browse Catalog</a>
+            </div>`;
         return;
     }
 
     try {
-        console.log('Fetching rooms from:', API_URL);
-        const response = await fetch(API_URL);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch(ROOMS_URL);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         const allRooms = await response.json();
-        console.log('All rooms loaded:', allRooms.length);
-        
         const favoriteRooms = allRooms.filter(room => favoriteIds.includes(Number(room.id)));
-        console.log('Filtered favorite rooms:', favoriteRooms);
         
         if (favoriteRooms.length === 0) {
             container.innerHTML = `
-        <div class="empty-message">
-                     <h3>No favorites found</h3>
-                     <p>The rooms you saved might have been removed or changed.</p>
-                     <button onclick="clearBrokenFavorites()" class="book-btn" style="margin-top:10px;">Clear Invalid Favorites</button>
-                 </div>`;
+                <div class="empty-message">
+                    <h3>No favorites found</h3>
+                    <p>The rooms you saved might have been removed or changed.</p>
+                    <button onclick="clearBrokenFavorites()" class="book-btn" style="margin-top:10px;">Clear Invalid Favorites</button>
+                </div>`;
             return;
         }
         
@@ -56,24 +41,23 @@ async function loadFavorites() {
         console.error('Error loading favorites:', error);
         container.innerHTML = `
             <div class="empty-message">
-                 <h3>Error loading data</h3>
-                 <p>${error.message}</p>
-                 <p>Make sure JSON Server is running on port 3000.</p>
-                 <button onclick="loadFavorites()" class="book-btn" style="margin-top:10px;">Try Again</button>
-             </div>`;
+                <h3>Error loading data</h3>
+                <p>${error.message}</p>
+                <p>Make sure JSON Server is running on port 3000.</p>
+                <button onclick="loadFavorites()" class="book-btn" style="margin-top:10px;">Try Again</button>
+            </div>`;
     }
 }
 
 function displayFavorites(rooms) {
     const container = document.getElementById('favorites-container');
-    
     if (rooms.length === 0) {
         container.innerHTML = `
-             <div class="empty-message">
-                 <h3>No favorites found</h3>
-                 <p>The rooms you saved might have been removed or changed.</p>
-                 <button onclick="clearBrokenFavorites()" class="book-btn" style="margin-top:10px;">Clear Invalid Favorites</button>
-             </div>`;
+            <div class="empty-message">
+                <h3>No favorites found</h3>
+                <p>The rooms you saved might have been removed or changed.</p>
+                <button onclick="clearBrokenFavorites()" class="book-btn" style="margin-top:10px;">Clear Invalid Favorites</button>
+            </div>`;
         return;
     }
 
@@ -94,14 +78,11 @@ function displayFavorites(rooms) {
                 <p class="room-card__description">${escapeHtml(room.description)}</p>
                 
                 <div class="room-card__amenities">
-                   ${room.amenities?.slice(0, 3).map(a => `<span class="amenity-tag">${a}</span>`).join('') || ''}
+                    ${room.amenities?.slice(0, 3).map(a => `<span class="amenity-tag">${a}</span>`).join('') || ''}
                 </div>
                 
                 <div class="room-card__buttons">
-                    <!-- Кнопка Избранное активна (красная), так как мы на странице избранного -->
-                    <button class="btn-fav active" data-id="${room.id}" title="Remove from favorites">
-                       ❤️
-                    </button>
+                    <button class="btn-fav active" data-id="${room.id}" title="Remove from favorites">❤️</button>
                     <button class="btn-cart" data-id="${room.id}" title="Add to cart">🛒 Cart</button>
                     <button class="btn-book" data-id="${room.id}">Book now</button>
                 </div>
@@ -109,29 +90,36 @@ function displayFavorites(rooms) {
         </div>
     `).join('');
 
-   
     setupButtonListeners(rooms);
 }
 
 function setupButtonListeners(rooms) {
-    
     document.querySelectorAll('.btn-fav.active').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const roomId = parseInt(btn.dataset.id);
-            removeFromFavorites(roomId);
+            await removeFromFavorites(roomId);
+            showNotification('Removed from favorites', 'info');
+            await loadFavorites();
+            await updateHeaderCounts();
         });
     });
 
-    
     document.querySelectorAll('.btn-cart').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             e.stopPropagation();
-            addToCart(parseInt(btn.dataset.id));
+            const roomId = parseInt(btn.dataset.id);
+            const cart = await getCart();
+            if (!cart.includes(roomId)) {
+                await addToCart(roomId);
+                showNotification('Added to cart', 'success');
+            } else {
+                showNotification('Already in cart', 'info');
+            }
+            await updateHeaderCounts();
         });
     });
 
-    
     document.querySelectorAll('.btn-book').forEach(btn => {
         btn.addEventListener('click', () => {
             const room = rooms.find(r => r.id === parseInt(btn.dataset.id));
@@ -140,63 +128,20 @@ function setupButtonListeners(rooms) {
     });
 }
 
-function removeFromFavorites(roomId) {
-    let favorites = getFavorites();
-    favorites = favorites.filter(id => id !== roomId);
-    saveFavorites(favorites);
-    showNotification('Removed from favorites', 'info');
-    loadFavorites(); // Перезагружаем список
-    updateHeaderCounts();
-}
-
-function addToCart(roomId) {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    if (!cart.includes(roomId)) {
-        cart.push(roomId);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        showNotification('Added to cart', 'success');
-    } else {
-        showNotification('Already in cart', 'info');
-    }
-}
-
-function getFavorites() {
-    try {
-        const stored = localStorage.getItem('favorites');
-        const favorites = stored ? JSON.parse(stored) : [];
-        return favorites.map(id => Number(id));
-    } catch (e) {
-        console.error('Error parsing favorites:', e);
-        return [];
-    }
-}
-
-function saveFavorites(favorites) {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    updateFavCount();
-}
-
-function updateFavCount() {
-    const count = getFavorites().length;
-    const favSpan = document.getElementById('fav-count');
-    if (favSpan) favSpan.textContent = `(${count})`;
-}
-
-function updateCartCount() {
-    const count = JSON.parse(localStorage.getItem('cart') || '[]').length;
-    const cartSpan = document.getElementById('cart-count');
-    if (cartSpan) cartSpan.textContent = `(${count})`;
-}
-
-function updateHeaderCounts() {
-    updateFavCount();
-    updateCartCount();
-}
-
-function clearBrokenFavorites() {
-    localStorage.setItem('favorites', '[]');
+async function clearBrokenFavorites() {
+    await clearFavorites();
     location.reload();
+}
+
+async function updateHeaderCounts() {
+    const favorites = await getFavorites();
+    const cart = await getCart();
+    
+    const favSpan = document.getElementById('fav-count');
+    const cartSpan = document.getElementById('cart-count');
+    
+    if (favSpan) favSpan.textContent = `(${favorites.length})`;
+    if (cartSpan) cartSpan.textContent = `(${cart.length})`;
 }
 
 function escapeHtml(str) {
@@ -209,23 +154,19 @@ function escapeHtml(str) {
 function showNotification(message, type = 'info') {
     const old = document.querySelector('.notification');
     if (old) old.remove();
-    
-    
     const container = document.querySelector('.container');
-    
+
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
-    
-    
+
     let rightPosition = 20;
     if (container) {
         const containerRect = container.getBoundingClientRect();
         const windowWidth = window.innerWidth;
-        
         rightPosition = windowWidth - containerRect.right + 20;
     }
-    
+
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -240,8 +181,7 @@ function showNotification(message, type = 'info') {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         animation: slideIn 0.3s ease;
     `;
-    
-    
+
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
@@ -251,9 +191,9 @@ function showNotification(message, type = 'info') {
         }`;
         document.head.appendChild(style);
     }
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideIn 0.3s ease reverse';
         setTimeout(() => notification.remove(), 300);

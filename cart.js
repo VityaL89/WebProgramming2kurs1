@@ -1,13 +1,12 @@
-const API_URL = 'http://localhost:3000/rooms';
+const ROOMS_URL = 'http://localhost:3000/rooms';
 
 async function loadCart() {
     const container = document.getElementById('cart-container');
     
+    const cartIds = await getCart();
+    console.log('Cart IDs from server:', cartIds);
     
-    const cartIds = JSON.parse(localStorage.getItem('cart') || '[]').map(id => Number(id));
-    console.log('Cart IDs:', cartIds);
-    
-    updateHeaderCounts();
+    await updateHeaderCounts();
     
     if (cartIds.length === 0) {
         container.innerHTML = `
@@ -20,12 +19,10 @@ async function loadCart() {
     }
     
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(ROOMS_URL);
         if (!response.ok) throw new Error('HTTP error: ' + response.status);
         
         const allRooms = await response.json();
-        
-        
         const cartRooms = allRooms.filter(room => cartIds.includes(Number(room.id)));
         
         if (cartRooms.length === 0) {
@@ -33,7 +30,7 @@ async function loadCart() {
                 <div class="empty-cart">
                     <h3>Cart items not found</h3>
                     <p>The rooms you added might have been removed.</p>
-                    <button onclick="clearCart()" class="book-btn" style="margin-top:10px;">Clear Cart</button>
+                    <button onclick="clearCartHandler()" class="book-btn" style="margin-top:10px;">Clear Cart</button>
                 </div>`;
             return;
         }
@@ -55,7 +52,6 @@ async function loadCart() {
 function displayCart(rooms) {
     const container = document.getElementById('cart-container');
     const totalPrice = rooms.reduce((sum, room) => sum + room.price, 0);
-    
     
     container.innerHTML = `
         <div class="cart-items">
@@ -95,11 +91,13 @@ function displayCart(rooms) {
         </div>
     `;
     
-    
     document.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             const id = parseInt(btn.dataset.id);
-            removeFromCart(id);
+            await removeFromCart(id);
+            showNotification('Removed from cart', 'info');
+            await loadCart();
+            await updateHeaderCounts();
         });
     });
     
@@ -113,27 +111,17 @@ function displayCart(rooms) {
     });
 }
 
-function removeFromCart(roomId) {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    cart = cart.filter(id => Number(id) !== roomId);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    showNotification('Removed from cart', 'info');
-    loadCart(); 
-    updateHeaderCounts();
-}
-
-function clearCart() {
+async function clearCartHandler() {
     if (confirm('Are you sure you want to clear your entire cart?')) {
-        localStorage.setItem('cart', '[]');
+        await clearCart();
         showNotification('Cart cleared', 'info');
-        loadCart();
-        updateHeaderCounts();
+        await loadCart();
+        await updateHeaderCounts();
     }
 }
 
-function checkout() {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+async function checkout() {
+    const cart = await getCart();
     if (cart.length === 0) {
         showNotification('Your cart is empty', 'info');
         return;
@@ -141,19 +129,19 @@ function checkout() {
     
     alert(`Thank you for your booking!\nTotal: ${cart.length} room(s)\nWe'll contact you shortly to confirm.`);
     
-    localStorage.setItem('cart', '[]');
-    loadCart();
-    updateHeaderCounts();
+    await clearCart();
+    await loadCart();
+    await updateHeaderCounts();
 }
 
-function updateHeaderCounts() {
-    const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+async function updateHeaderCounts() {
+    const favorites = await getFavorites();
+    const cart = await getCart();
     
     const favSpan = document.getElementById('fav-count');
     const cartSpan = document.getElementById('cart-count');
     
-    if (favSpan) favSpan.textContent = `(${favs.length})`;
+    if (favSpan) favSpan.textContent = `(${favorites.length})`;
     if (cartSpan) cartSpan.textContent = `(${cart.length})`;
 }
 
@@ -167,23 +155,19 @@ function escapeHtml(str) {
 function showNotification(message, type = 'info') {
     const old = document.querySelector('.notification');
     if (old) old.remove();
-    
-    
     const container = document.querySelector('.container');
-    
+
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
-    
-    
+
     let rightPosition = 20;
     if (container) {
         const containerRect = container.getBoundingClientRect();
         const windowWidth = window.innerWidth;
-        
         rightPosition = windowWidth - containerRect.right + 20;
     }
-    
+
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -198,8 +182,7 @@ function showNotification(message, type = 'info') {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         animation: slideIn 0.3s ease;
     `;
-    
-    
+
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
@@ -209,9 +192,9 @@ function showNotification(message, type = 'info') {
         }`;
         document.head.appendChild(style);
     }
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideIn 0.3s ease reverse';
         setTimeout(() => notification.remove(), 300);

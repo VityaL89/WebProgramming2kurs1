@@ -1,32 +1,35 @@
-const API_URL = 'http://localhost:3000/rooms';
+const ROOMS_URL = 'http://localhost:3000/rooms';
 let currentRooms = [];
 let originalRooms = [];
 
 async function loadRoomsFromServer() {
     const container = document.getElementById('catalog-container');
-    container.innerHTML = '<div class="loading">Loading rooms...</div>';
+    container.innerHTML = '<p>Loading rooms...</p>';
+    
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(ROOMS_URL);
         if (!response.ok) throw new Error('HTTP error: ' + response.status);
+        
         const rooms = await response.json();
         originalRooms = [...rooms];
         currentRooms = [...rooms];
-        displayRooms(currentRooms);
+        
+        await displayRooms(currentRooms);
         updateInfo(`Loaded ${rooms.length} rooms`);
     } catch (error) {
         console.error('Error:', error);
         container.innerHTML = `
-             <div class="no-results">
-                 <h3>❌ Cannot connect to server</h3>
-                 <p>Make sure JSON Server is running: <strong>npm run server</strong></p>
-                 <button onclick="loadRoomsFromServer()" class="book-btn" style="margin-top:20px">Try Again</button>
-             </div>`;
+            <div class="no-results">
+                <h3>❌ Cannot connect to server</h3>
+                <p>Make sure JSON Server is running: <strong>npm run server</strong></p>
+                <button onclick="loadRoomsFromServer()" class="book-btn" style="margin-top:20px;">Try Again</button>
+            </div>`;
     }
 }
 
-function displayRooms(rooms) {
+async function displayRooms(rooms) {
     const container = document.getElementById('catalog-container');
-    const favorites = getFavorites();
+    const favorites = await getFavorites();
     
     if (!rooms || rooms.length === 0) {
         container.innerHTML = '<div class="no-results"><h3>No rooms found</h3></div>';
@@ -50,12 +53,12 @@ function displayRooms(rooms) {
                 <p class="room-card__description">${escapeHtml(room.description)}</p>
                 
                 <div class="room-card__amenities">
-                   ${room.amenities?.slice(0, 3).map(a => `<span class="amenity-tag">${a}</span>`).join('') || ''}
+                    ${room.amenities?.slice(0, 3).map(a => `<span class="amenity-tag">${a}</span>`).join('') || ''}
                 </div>
                 
                 <div class="room-card__buttons">
                     <button class="btn-fav ${favorites.includes(room.id) ? 'active' : ''}" data-id="${room.id}" title="Add to favorites">
-                       ${favorites.includes(room.id) ? '❤️' : '🤍'}
+                        ${favorites.includes(room.id) ? '❤️' : '🤍'}
                     </button>
                     <button class="btn-cart" data-id="${room.id}" title="Add to cart">🛒 Cart</button>
                 </div>
@@ -63,68 +66,42 @@ function displayRooms(rooms) {
         </div>
     `).join('');
 
-    setupButtonListeners(rooms);
+    await setupButtonListeners(rooms);
 }
 
-
-function setupButtonListeners(rooms) {
-   
+async function setupButtonListeners(rooms) {
     document.querySelectorAll('.btn-fav').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const roomId = parseInt(btn.dataset.id);
-            toggleFavorite(roomId, btn);
+            await toggleFavorite(roomId, btn);
         });
     });
-    
+
     document.querySelectorAll('.btn-cart').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             e.stopPropagation();
-            addToCart(parseInt(btn.dataset.id));
-        });
-    });
-
-    
-    document.querySelectorAll('.btn-book').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const room = rooms.find(r => r.id === parseInt(btn.dataset.id));
-            if (room) alert(`Thank you for booking ${room.name}! Price: $${room.price}/night`);
+            const roomId = parseInt(btn.dataset.id);
+            await addToCartHandler(roomId);
         });
     });
 }
 
-
-function getFavorites() {
-    try {
-        const stored = localStorage.getItem('favorites');
-        const favorites = stored ? JSON.parse(stored) : [];
-        return favorites.map(id => Number(id));
-    } catch (e) {
-        console.error('Error parsing favorites:', e);
-        return [];
-    }
-}
-
-function saveFavorites(favorites) {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    updateFavCount();
-}
-
-function toggleFavorite(roomId, btnElement) {
-    let favorites = getFavorites();
+async function toggleFavorite(roomId, btnElement) {
+    const favorites = await getFavorites();
     const isFavorited = favorites.includes(roomId);
+    
     if (isFavorited) {
-        favorites = favorites.filter(id => id !== roomId);
+        await removeFromFavorites(roomId);
         showNotification('Removed from favorites', 'info');
     } else {
-        favorites.push(roomId);
+        await addToFavorites(roomId);
         showNotification('Added to favorites', 'success');
     }
-
-    saveFavorites(favorites);
-
+    
     if (btnElement) {
-        if (favorites.includes(roomId)) {
+        const newFavorites = await getFavorites();
+        if (newFavorites.includes(roomId)) {
             btnElement.classList.add('active');
             btnElement.innerHTML = '❤️';
         } else {
@@ -132,49 +109,49 @@ function toggleFavorite(roomId, btnElement) {
             btnElement.innerHTML = '🤍';
         }
     }
+    
+    await updateFavCount();
 }
 
-function updateFavCount() {
-    const count = getFavorites().length;
-    const favSpan = document.getElementById('fav-count');
-    if (favSpan) favSpan.textContent = `(${count})`;
-}
-
-function addToCart(roomId) {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+async function addToCartHandler(roomId) {
+    const cart = await getCart();
     if (!cart.includes(roomId)) {
-        cart.push(roomId);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
+        await addToCart(roomId);
+        await updateCartCount();
         showNotification('Added to cart', 'success');
+    } else {
+        showNotification('Already in cart', 'info');
     }
 }
-function updateCartCount() {
-    const count = JSON.parse(localStorage.getItem('cart') || '[]').length;
+
+async function updateFavCount() {
+    const favorites = await getFavorites();
+    const favSpan = document.getElementById('fav-count');
+    if (favSpan) favSpan.textContent = `(${favorites.length})`;
+}
+
+async function updateCartCount() {
+    const cart = await getCart();
     const cartSpan = document.getElementById('cart-count');
-    if (cartSpan) cartSpan.textContent = `(${count})`;
+    if (cartSpan) cartSpan.textContent = `(${cart.length})`;
 }
 
 function showNotification(message, type = 'info') {
     const old = document.querySelector('.notification');
     if (old) old.remove();
-    
-   
     const container = document.querySelector('.container');
-    
+
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
-    
-    
+
     let rightPosition = 20;
     if (container) {
         const containerRect = container.getBoundingClientRect();
         const windowWidth = window.innerWidth;
-        
         rightPosition = windowWidth - containerRect.right + 20;
     }
-    
+
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -189,8 +166,7 @@ function showNotification(message, type = 'info') {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         animation: slideIn 0.3s ease;
     `;
-    
-   
+
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
@@ -200,15 +176,14 @@ function showNotification(message, type = 'info') {
         }`;
         document.head.appendChild(style);
     }
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideIn 0.3s ease reverse';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
-
 
 function setupSearch() {
     const input = document.getElementById('search-input');
@@ -260,7 +235,6 @@ function resetFilters() {
     displayRooms(currentRooms);
 }
 
-
 function applyMap() { displayRooms(currentRooms.map(r => ({ ...r, price: Math.round(r.price * 0.9) }))); updateInfo('MAP: 10% discount'); }
 function applyFilter() { displayRooms(currentRooms.filter(r => r.price > 80)); updateInfo('FILTER: price > $80'); }
 function sortByPrice() { displayRooms([...currentRooms].sort((a, b) => a.price - b.price)); updateInfo('SORT: price'); }
@@ -310,14 +284,13 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadRoomsFromServer();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadRoomsFromServer();
     setupMethodButtons();
     setupSearch();
     setupSort();
     setupCategoryFilters();
     document.getElementById('reset-filters')?.addEventListener('click', resetFilters);
-    updateFavCount();
-    updateCartCount();
+    await updateFavCount();
+    await updateCartCount();
 });
