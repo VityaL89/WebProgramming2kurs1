@@ -1,7 +1,5 @@
-// api.js
 const API_BASE = 'http://localhost:3000';
 
-// Работа с избранным
 async function getFavorites() {
     try {
         const response = await fetch(`${API_BASE}/favorites`);
@@ -65,7 +63,6 @@ async function clearFavorites() {
     }
 }
 
-// Работа с корзиной
 async function getCart() {
     try {
         const response = await fetch(`${API_BASE}/cart`);

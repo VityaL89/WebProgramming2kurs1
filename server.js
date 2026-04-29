@@ -6,14 +6,12 @@ const middlewares = jsonServer.defaults();
 server.use(jsonServer.bodyParser);
 server.use(middlewares);
 
-// Прямая обработка POST запросов для favorites
 server.post('/favorites', (req, res) => {
     const db = router.db;
     db.set('favorites', req.body).write();
     res.json(req.body);
 });
 
-// Прямая обработка POST запросов для cart
 server.post('/cart', (req, res) => {
     const db = router.db;
     db.set('cart', req.body).write();
