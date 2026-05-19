@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Мировая кулинарная книга | Рецепты со всего мира</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <h1>🍜 Мировая кулинарная книга</h1>
+                <p>Рецепты от шеф-поваров со всех континентов</p>
+            </div>
+            <div class="search-wrapper">
+                <div class="search-field">
+                    <input type="text" id="searchInput" placeholder="Поиск по названию или ингредиенту... (например: chicken, pasta)" autofocus>
+                    <button class="clear-btn" id="clearSearchBtn" aria-label="Очистить">✖</button>
+                    <button class="search-btn" id="searchBtn">🔍 Найти</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="filters">
+            <div class="filter-group" id="categoryFilters">
+                <span style="align-self:center; font-weight:500;">🍲 Категория:</span>
+
+            </div>
+            <div class="filter-group" id="areaFilters">
+                <span style="align-self:center; font-weight:500;">🌍 Регион:</span>
+
+            </div>
+            <button class="reset-filters" id="resetFiltersBtn">Сбросить фильтры</button>
+        </div>
+
+        <div id="mealsGrid" class="meals-grid">
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>© 2026 Мировая кулинарная книга</p>
+            <a href="https://github.com/VityaL89" target="_blank" rel="noopener noreferrer">GitHub автора</a>
+        </div>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
